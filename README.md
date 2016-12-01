@@ -6,4 +6,5 @@ Show the status of builds
 Status
 ------
 
-Not working... yet
+Kinda working, but only for basic querying of a single pipeline.
+Assumes an access_token is stored in local storage.
