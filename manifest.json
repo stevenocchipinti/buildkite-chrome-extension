@@ -3,8 +3,14 @@
   "description": "Show the status of builds",
   "version": "0.1",
   "background": { "scripts": ["background.js"] },
+  "permissions": [
+    "tabs", "<all_urls>"
+  ],
   "browser_action": {
-      "name": "Click to show the status of builds"
+    "name": "Click to show the status of builds",
+    "default_title": "Show the status of builds",
+    "default_icon": "logo-disabled.png",
+    "default_popup": "popup.html"
   },
   "manifest_version": 2
 }
