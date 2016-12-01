@@ -1,0 +1,10 @@
+{
+  "name": "Buildkite status",
+  "description": "Show the status of builds",
+  "version": "0.1",
+  "background": { "scripts": ["background.js"] },
+  "browser_action": {
+      "name": "Click to show the status of builds"
+  },
+  "manifest_version": 2
+}
