@@ -1,26 +1,34 @@
-const [ org, pipeline ] = "myOrg/myPipeline".split("/");
-const access_token = localStorage.getItem("buildkite-access-key");
+const pipelines = localStorage.getItem("buildkite-pipelines");
+const [ org, pipeline ] = JSON.parse(pipelines)[0].split("/");
+const accessToken = localStorage.getItem("buildkite-access-key");
+const branch = "master";
+const refreshRate = 30;
 
 if (!accessToken)
   throw "No access token! Please set `buildkite-access-key` in localStorage";
 
 const url = `https://api.buildkite.com/v2/`
-  + `organizations/${org}/pipelines/${pipeline}/builds?`
-  + `access_token=${accessToken}`;
+  + `organizations/${org}/pipelines/${pipeline}/builds`
+  + `?per_page=1&branch=${branch}&access_token=${accessToken}`;
 
-function update() {
+
+var popup;
+
+function updateBuilds() {
   fetch(url)
     .then((response) => { return response.json() })
     .then((json) => {
       chrome.browserAction.setIcon({path: "logo-" + json[0].state + ".png"});
+      if (popup) popup.postMessage(json);
     })
-    .catch((ex) => { console.log('parsing failed', ex) })
+    .catch((ex) => { console.error('parsing failed', ex) })
 }
 
-update();
-setInterval(update, 60 * 1000);
+updateBuilds();
+setInterval(updateBuilds, refreshRate * 1000);
 
-// var views = chrome.extension.getViews({
-//     type: "popup"
-// });
-// console.log(views);
+chrome.extension.onConnect.addListener((port) => {
+  popup = port;
+  port.onDisconnect.addListener(() => { popup = undefined; });
+  updateBuilds();
+});
