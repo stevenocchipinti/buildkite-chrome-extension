@@ -1,44 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <style>
-    body {
-      width: 300px;
-      font-family: -apple-system, BlinkMacSystemFont,
-        "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans",
-        "Droid Sans", "Helvetica Neue", sans-serif;
-    }
-
-    header {
-      padding: 5px 2px 8px;
-    }
-    header > img {
-      height: 20px;
-    }
-
-    article {
-      border: 1px solid #ddd;
-      border-radius: 3px;
-      padding: 10px;
-    }
-    article.passed {
-      background-color: rgba(0, 255, 0, 0.1);
-      border-color: rgb(0, 190, 0);
-    }
-    article.failed {
-      background-color: rgba(255, 0, 0, 0.1);
-      border-color: rgb(190, 0, 0);
-    }
-    article > * {
-      margin: 0;
-    }
-    article > h2 {
-      font-weight: normal;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
   <body>
     <header>
-      <img src="logo-with-title.svg" alt="BuildKite"/>
+      <a target="_blank" href="https://buildkite.com">
+        <img src="logo-with-title.svg" alt="BuildKite"/>
+      </a>
+      <a href="config.html">Configure</a>
     </header>
     <div id="content"></div>
     <script src="popup.js"></script>

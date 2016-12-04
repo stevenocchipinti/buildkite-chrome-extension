@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="stylesheet" href="forms-min.css">
+  <link rel="stylesheet" href="style.css">
+  <body>
+    <header>
+      <a target="_blank" href="https://buildkite.com">
+        <img src="logo-with-title.svg" alt="BuildKite"/>
+      </a>
+    </header>
+
+    <div id="content">
+      <form class="pure-form pure-form-stacked">
+        <fieldset>
+          <legend>Configuration</legend>
+
+          <div class="formElement">
+            <label for="accessKey">Access Key</label>
+            <input id="accessKey" type="password" placeholder="Access Key">
+          </div>
+
+          <div class="formElement">
+            <label for="pipelines">Pipelines (one per line)</label>
+            <textarea rows="5" id="pipelines" placeholder="Pipelines"></textarea>
+          </div>
+
+          <div class="formActions">
+            <button type="submit" class="pure-button pure-button-primary">Save</button>
+            <a href="popup.html">Cancel</a>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+    <script src="config.js"></script>
+  </body>
+</html>
+
