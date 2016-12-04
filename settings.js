@@ -1,8 +1,8 @@
-function getAccessKey() {
+function getAccessToken() {
   return localStorage.getItem("buildkite-access-key");
 }
-function setAccessKey(accessKey) {
-  return localStorage.setItem("buildkite-access-key", accessKey);
+function setAccessToken(accessToken) {
+  return localStorage.setItem("buildkite-access-key", accessToken);
 }
 
 function getPipelines() {
@@ -41,7 +41,7 @@ function setBuild(buildObject) {
 }
 
 function hasValidSettings() {
-  const accessToken = (getAccessKey() && getAccessKey().length > 0);
+  const accessToken = (getAccessToken() && getAccessToken().length > 0);
   const pipelines = (getPipelines() && getPipelines().length > 0);
   return accessToken && pipelines;
 }

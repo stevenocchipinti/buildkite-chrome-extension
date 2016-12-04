@@ -5,7 +5,7 @@ var popup;
 function getUrls() {
   return getPipelines().map(pipelineComposite => {
     const [ org, pipeline ] = pipelineComposite.split("/");
-    const accessToken = getAccessKey();
+    const accessToken = getAccessToken();
     const branch = "master";
 
     return `https://api.buildkite.com/v2/`
