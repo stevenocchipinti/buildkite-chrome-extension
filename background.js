@@ -1,7 +1,3 @@
-const refreshRate = 30;
-var popup;
-
-
 function getUrls() {
   return getPipelines().map(pipelineComposite => {
     const [ org, pipeline ] = pipelineComposite.split("/");
@@ -28,6 +24,7 @@ function setIconState(state) {
 }
 
 
+var popup;
 function updateBuilds() {
   if (!hasValidSettings()) {
     setIconState("disabled");
@@ -51,12 +48,19 @@ function updateBuilds() {
   });
 }
 
+var interval;
+function init() {
+  if (interval) clearInterval(interval)
+  updateBuilds();
+  interval = setInterval(updateBuilds, getRefreshRate() * 1000);
+}
 
-updateBuilds();
-setInterval(updateBuilds, refreshRate * 1000);
-
+init();
 chrome.extension.onConnect.addListener(port => {
   popup = port;
   port.onDisconnect.addListener(() => { popup = undefined; });
+  port.onMessage.addListener((msg) => {
+    if (msg.action === "UPDATE_CONFIG") init();
+  });
   updateBuilds();
 });

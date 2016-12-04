@@ -5,6 +5,13 @@ function setAccessToken(accessToken) {
   return localStorage.setItem("buildkite-access-key", accessToken);
 }
 
+function getRefreshRate() {
+  return localStorage.getItem("buildkite-refresh-rate");
+}
+function setRefreshRate(refreshRate) {
+  return localStorage.setItem("buildkite-refresh-rate", refreshRate);
+}
+
 function getPipelines() {
   return JSON.parse(localStorage.getItem("buildkite-pipelines") || '[]');
 }
@@ -43,5 +50,6 @@ function setBuild(buildObject) {
 function hasValidSettings() {
   const accessToken = (getAccessToken() && getAccessToken().length > 0);
   const pipelines = (getPipelines() && getPipelines().length > 0);
-  return accessToken && pipelines;
+  const refreshRate = (getRefreshRate() && getRefreshRate() > 0);
+  return accessToken && pipelines && refreshRate;
 }
