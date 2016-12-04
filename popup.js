@@ -23,7 +23,9 @@ port.onMessage.addListener(msg => {
       const build = builds[buildName];
       return result.concat(`
         <article class="${build.state}">
-          <h2>${build.pipeline.name}</h2>
+          <a target="_blank" href="${build.pipeline.web_url}">
+            <h2>${build.pipeline.name}</h2>
+          </a>
         </article>`
       );
     }, "");

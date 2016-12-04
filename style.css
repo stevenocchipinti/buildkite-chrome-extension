@@ -73,10 +73,10 @@ article.failed {
   background-color: rgba(255, 0, 0, 0.1);
   border-color: rgb(190, 0, 0);
 }
-article > * {
+article * {
   margin: 0;
 }
-article > h2 {
+article h2 {
   font-weight: normal;
 }
 
