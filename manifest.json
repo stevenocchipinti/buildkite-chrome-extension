@@ -4,8 +4,8 @@
   "version": "0.1",
   "background": {
     "scripts": [
-      "settings.js",
-      "background.js"
+      "js/settings.js",
+      "js/background.js"
     ]
   },
   "permissions": [
@@ -14,8 +14,8 @@
   "browser_action": {
     "name": "Click to show the status of builds",
     "default_title": "Show the status of builds",
-    "default_icon": "logo-disabled.png",
-    "default_popup": "popup.html"
+    "default_icon": "assets/logo-disabled.png",
+    "default_popup": "pages/popup.html"
   },
   "manifest_version": 2
 }

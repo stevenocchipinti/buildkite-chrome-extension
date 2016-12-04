@@ -20,7 +20,7 @@ function overallState(builds) {
 }
 
 function setIconState(state) {
-  chrome.browserAction.setIcon({path: `logo-${state}.png`});
+  chrome.browserAction.setIcon({path: `assets/logo-${state}.png`});
 }
 
 
