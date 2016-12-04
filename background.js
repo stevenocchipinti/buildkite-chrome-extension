@@ -3,11 +3,11 @@ var popup;
 
 
 function getUrls() {
-  const accessToken = getAccessKey();
-
   return getPipelines().map(pipelineComposite => {
     const [ org, pipeline ] = pipelineComposite.split("/");
+    const accessToken = getAccessKey();
     const branch = "master";
+
     return `https://api.buildkite.com/v2/`
       + `organizations/${org}/pipelines/${pipeline}/builds`
       + `?per_page=1&branch=${branch}&access_token=${accessToken}`;
@@ -15,8 +15,8 @@ function getUrls() {
 }
 
 
-function overallState(values) {
-  if (values.every(value => { return value && value.state === "passed" })) {
+function overallState(builds) {
+  if (builds.every(build => { return build && build.state === "passed" })) {
     return "passed";
   } else {
     return "failed";
@@ -39,14 +39,14 @@ function updateBuilds() {
     return fetch(url)
       .then(response => { return response.json() })
       .then(json => {
-        setBuild(json[0].pipeline.name, json[0]);
+        setBuild(json[0]);
         if (popup) popup.postMessage({action: "UPDATE_SUCCESSFUL"});
         return json[0];
       })
       .catch(ex => { console.error('parsing failed', ex) });
   });
-  Promise.all(promises).then(values => {
-    setIconState(overallState(values));
+  Promise.all(promises).then(builds => {
+    setIconState(overallState(builds));
     if (popup) popup.postMessage({action: "UPDATE_COMPLETE"});
   });
 }

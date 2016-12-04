@@ -8,6 +8,9 @@ function setAccessKey(accessKey) {
 function getPipelines() {
   return JSON.parse(localStorage.getItem("buildkite-pipelines") || '[]');
 }
+function getPipelineNames() {
+  return getPipelines().map(name => { return name.split("/")[1]; });
+}
 function setPipelines(pipelines) {
   let cleanedPipelines = pipelines.reduce((results, line) => {
     if (line.length) results.push(line.trim());
@@ -17,17 +20,23 @@ function setPipelines(pipelines) {
 }
 
 function getBuilds() {
-  return JSON.parse(localStorage.getItem("buildkite-builds") || '{}');
+  return JSON.parse(localStorage.getItem("buildkite-builds") || '[]');
 }
 function setBuilds(builds) {
   localStorage.setItem("buildkite-builds", JSON.stringify(builds));
 }
 function getBuild(buildName) {
-  return getBuilds()[buildName];
+  return getBuilds().find(build => { return build.pipeline.name === buildName });
 }
-function setBuild(buildName, buildObject) {
-  let builds = getBuilds();
-  builds[buildName] = buildObject;
+function setBuild(buildObject) {
+  let builds = [];
+  getPipelineNames().forEach(pipelineName => {
+    if (pipelineName === buildObject.pipeline.name) {
+      builds.push(buildObject);
+    } else if (getBuild(pipelineName)) {
+      builds.push(getBuild(pipelineName));
+    }
+  });
   setBuilds(builds);
 }
 
