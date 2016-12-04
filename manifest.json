@@ -1,7 +1,7 @@
 {
   "name": "Buildkite status",
   "description": "Show the status of builds",
-  "version": "0.1",
+  "version": "1.0.0",
   "background": {
     "scripts": [
       "js/settings.js",
