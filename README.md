@@ -1,7 +1,7 @@
 BuildKite Chrome Extension
 ==========================
 
-Show the status of a single build
+Show the status of multiple builds
 
 Status
 ------

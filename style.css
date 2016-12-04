@@ -54,6 +54,7 @@ article {
   border: 1px solid #ddd;
   border-radius: 3px;
   padding: 10px;
+  margin-bottom: 5px;
 }
 article.passed {
   background-color: rgba(0, 255, 0, 0.1);
