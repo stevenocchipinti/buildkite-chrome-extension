@@ -1,21 +1,23 @@
-const pipelines = localStorage.getItem("buildkite-pipelines");
-const [ org, pipeline ] = JSON.parse(pipelines)[0].split("/");
-const accessToken = localStorage.getItem("buildkite-access-key");
-const branch = "master";
 const refreshRate = 30;
 
-if (!accessToken)
-  throw "No access token! Please set `buildkite-access-key` in localStorage";
+function getUrl() {
+  const pipelines = localStorage.getItem("buildkite-pipelines");
+  const [ org, pipeline ] = JSON.parse(pipelines)[0].split("/");
+  const accessToken = localStorage.getItem("buildkite-access-key");
+  const branch = "master";
 
-const url = `https://api.buildkite.com/v2/`
-  + `organizations/${org}/pipelines/${pipeline}/builds`
-  + `?per_page=1&branch=${branch}&access_token=${accessToken}`;
+  if (!accessToken)
+    throw "No access token! Please set `buildkite-access-key` in localStorage";
 
+  return `https://api.buildkite.com/v2/`
+    + `organizations/${org}/pipelines/${pipeline}/builds`
+    + `?per_page=1&branch=${branch}&access_token=${accessToken}`;
+}
 
 var popup;
 
 function updateBuilds() {
-  fetch(url)
+  fetch(getUrl())
     .then((response) => { return response.json() })
     .then((json) => {
       chrome.browserAction.setIcon({path: "logo-" + json[0].state + ".png"});

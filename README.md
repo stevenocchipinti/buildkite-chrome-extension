@@ -1,10 +1,9 @@
 BuildKite Chrome Extension
 ==========================
 
-Show the status of builds
+Show the status of a single build
 
 Status
 ------
 
-Kinda working, but only for basic querying of a single pipeline.
-Assumes an access_token is stored in local storage.
+Works! Stores configuration in localStorage.
