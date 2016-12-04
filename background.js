@@ -3,12 +3,9 @@ var popup;
 
 
 function getUrls() {
-  const accessToken = localStorage.getItem("buildkite-access-key");
-  if (!accessToken)
-    throw "No access token! Please set `buildkite-access-key` in localStorage";
+  const accessToken = getAccessKey();
 
-  const pipelines = JSON.parse(localStorage.getItem("buildkite-pipelines") || []);
-  return pipelines.map(pipelineComposite => {
+  return getPipelines().map(pipelineComposite => {
     const [ org, pipeline ] = pipelineComposite.split("/");
     const branch = "master";
     return `https://api.buildkite.com/v2/`
@@ -19,24 +16,38 @@ function getUrls() {
 
 
 function overallState(values) {
-  if (values.every(value => { return value.state === "passed" })) {
+  if (values.every(value => { return value && value.state === "passed" })) {
     return "passed";
   } else {
     return "failed";
   }
 }
 
+function setIconState(state) {
+  chrome.browserAction.setIcon({path: `logo-${state}.png`});
+}
+
 
 function updateBuilds() {
+  if (!hasValidSettings()) {
+    setIconState("disabled");
+    return;
+  }
+
+  if (popup) popup.postMessage({action: "UPDATE_PENDING"});
   let promises = getUrls().map(url => {
     return fetch(url)
       .then(response => { return response.json() })
-      .then(json => { return json[0] })
+      .then(json => {
+        setBuild(json[0].pipeline.name, json[0]);
+        if (popup) popup.postMessage({action: "UPDATE_SUCCESSFUL"});
+        return json[0];
+      })
       .catch(ex => { console.error('parsing failed', ex) });
   });
   Promise.all(promises).then(values => {
-    chrome.browserAction.setIcon({path: "logo-" + overallState(values) + ".png"});
-    if (popup) popup.postMessage(values);
+    setIconState(overallState(values));
+    if (popup) popup.postMessage({action: "UPDATE_COMPLETE"});
   });
 }
 
