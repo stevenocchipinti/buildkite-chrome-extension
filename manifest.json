@@ -8,6 +8,9 @@
       "js/background.js"
     ]
   },
+  "icons": {
+    "256": "assets/logo-with-title-square.png"
+  },
   "permissions": [
     "tabs", "<all_urls>"
   ],
