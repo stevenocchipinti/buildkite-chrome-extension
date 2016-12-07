@@ -12,12 +12,27 @@ function getUrls() {
 
 
 function overallState(builds) {
-  if (builds.every(build => { return build && build.state === "passed" })) {
-    return "passed";
-  } else {
-    return "failed";
+  // Possible states and how I'll probably categorize them:
+  //   Yellow:  running, scheduled
+  //   Green:   passed, finished
+  //   Red:     failed, canceled, canceling, blocked
+  //   Grey:    skipped, not_run
+  const yellow = build => {
+    return ["running", "scheduled"].includes(build.state)
   }
+  const red = build => {
+    return ["failed", "canceled", "canceling", "blocked"].includes(build.state)
+  }
+  const green = build => {
+    return ["passed", "finished"].includes(build.state)
+  };
+
+  if (builds.some(yellow)) return "running";
+  if (builds.some(red)) return "failed";
+  if (builds.every(green)) return "passed";
+  return "disabled";
 }
+
 
 function setIconState(state) {
   chrome.browserAction.setIcon({path: `assets/logo-${state}.png`});

@@ -66,13 +66,17 @@ article {
   padding: 10px;
   margin-top: 5px;
 }
-article.passed {
+article.passed, article.finished {
   background-color: rgba(0, 255, 0, 0.1);
   border-color: rgb(0, 190, 0);
 }
-article.failed {
+article.failed, article.canceled, article.canceling, article.blocked {
   background-color: rgba(255, 0, 0, 0.1);
   border-color: rgb(190, 0, 0);
+}
+article.running, article.scheduled {
+  background-color: rgba(255, 255, 0, 0.1);
+  border-color: rgb(190, 190, 0);
 }
 article * {
   margin: 0;
